@@ -1,21 +1,26 @@
-"""
-User Input:
-o Prompt the user to enter a line of text.
-• Write to File
-o Store the entered text in a file on disk.
-o If the file does not exist, create it.
-o If the file already exists, overwrite its contents.
-• Read from File
+from pathlib import Path
 
-Open the same file.
-o Read the stored line of text from the file.
-• Output
-o Display:
- the text read from the file
- the file path where the text was stored
-• Error Handling:
-o Your program must handle and report errors for:
- Failure to create or open the file
- Failure to write to the file
- Failure to read from the file
-"""
+# Get Input
+user_input = input("Enter a line of text: ")
+file_name = input("Please enter a filename - example.txt: ")
+
+# Create File
+try:
+     with open(file_name, "w") as f:
+        f.write(user_input)
+        print("Text Successfully written to file.")
+        print(f"Stored file path: {Path(file_name).resolve()}")
+
+except Exception as e:
+    print(f"Error: Failure to create or write to the file. ({e})")
+
+# Read File
+try:
+    with open(file_name, "r") as f:
+        content = f.read()
+        print("Reading from file...")
+        print(content)
+except FileNotFoundError:
+    print("Error: Failure to open the file - it does not exist.")
+except Exception as e:
+    print(f"Error: Failure to read from the file. ({e})")
